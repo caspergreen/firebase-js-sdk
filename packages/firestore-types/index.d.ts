@@ -40,7 +40,7 @@ export interface Settings {
   host?: string;
   ssl?: boolean;
   persistence: Persistence | Persistence[];
-  logLevel: LogLevel
+  logLevel: LogLevel;
   experimentalForceLongPolling?: boolean;
 }
 
@@ -61,7 +61,6 @@ export class FirebaseFirestore {
 
   collectionGroup(collectionId: string): Query<DocumentData>;
 }
-
 
 export function initializeFirestore(
   firestore: FirebaseFirestore,
