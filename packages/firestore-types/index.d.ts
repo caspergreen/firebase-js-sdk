@@ -30,9 +30,9 @@ export interface IndexedDbPersistenceSettings {
 
 export interface Persistence {}
 
-export function browserMemoryPersistence(): Persistence;
+export function memoryPersistence(): Persistence;
 
-export function browserIndexedDbPersistence(
+export function indexedDbPersistence(
   settings?: IndexedDbPersistenceSettings
 ): Persistence;
 
@@ -67,6 +67,7 @@ export function initializeFirestore(
   settings: Settings
 ): void;
 
+// MARK: Firestore methods
 export function waitForPendingWrites(
   firestore: FirebaseFirestore
 ): Promise<void>;
@@ -87,6 +88,7 @@ export function onSnapshotsInSync(
     complete?: () => void;
   }
 ): () => void;
+
 export function onSnapshotsInSync(
   firestore: FirebaseFirestore,
   onSync: () => void
@@ -98,6 +100,70 @@ export function runTransaction<T>(
   firestore: FirebaseFirestore,
   updateFunction: (transaction: Transaction) => Promise<T>
 ): Promise<T>;
+
+// MARK: DocumentReference methods
+export function getDocument<T>(
+  reference: DocumentReference<T>,
+  options?: GetOptions
+): Promise<DocumentSnapshot<T>>;
+
+export function deleteDocument(reference: DocumentReference): Promise<void>;
+
+export function updateDocument(
+  reference: DocumentReference,
+  data: UpdateData
+): Promise<void>;
+
+export function updateDocument(
+  field: string | FieldPath,
+  value: any,
+  ...moreFieldsAndValues: any[]
+): Promise<void>;
+
+export function setDocument<T>(
+  reference: DocumentReference<T>,
+  data: T,
+  options?: SetOptions
+): Promise<void>;
+
+export function addDocument<T>(
+  reference: CollectionReference<T>,
+  data: T
+): Promise<DocumentSnapshot<T>>;
+
+export function onSnapshot<T>(
+  reference: DocumentReference<T>,
+  observer: {
+    next?: (snapshot: DocumentSnapshot<T>) => void;
+    error?: (error: FirestoreError) => void;
+    complete?: () => void;
+  }
+): () => void;
+
+export function onSnapshot<T>(
+  reference: DocumentReference<T>,
+  options: SnapshotListenOptions,
+  observer: {
+    next?: (snapshot: DocumentSnapshot<T>) => void;
+    error?: (error: Error) => void;
+    complete?: () => void;
+  }
+): () => void;
+
+export function onSnapshot<T>(
+  reference: DocumentReference<T>,
+  onNext: (snapshot: DocumentSnapshot<T>) => void,
+  onError?: (error: Error) => void,
+  onCompletion?: () => void
+): () => void;
+
+export function onSnapshot<T>(
+  reference: DocumentReference<T>,
+  options: SnapshotListenOptions,
+  onNext: (snapshot: DocumentSnapshot<T>) => void,
+  onError?: (error: Error) => void,
+  onCompletion?: () => void
+): () => void;
 
 export class GeoPoint {
   constructor(latitude: number, longitude: number);
@@ -215,64 +281,6 @@ export class DocumentReference<T = DocumentData> {
   withConverter<U>(converter: FirestoreDataConverter<U>): DocumentReference<U>;
 }
 
-export function getDocument<T>(
-  reference: DocumentReference<T>,
-  options?: GetOptions
-): Promise<DocumentSnapshot<T>>;
-
-export function deleteDocument(reference: DocumentReference): Promise<void>;
-
-export function updateDocument(
-  reference: DocumentReference,
-  data: UpdateData
-): Promise<void>;
-export function updateDocument(
-  field: string | FieldPath,
-  value: any,
-  ...moreFieldsAndValues: any[]
-): Promise<void>;
-
-export function setDocument<T>(
-  reference: DocumentReference<T>,
-  data: T,
-  options?: SetOptions
-): Promise<void>;
-
-export function addDocument<T>(
-  reference: CollectionReference<T>,
-  data: T
-): Promise<DocumentSnapshot<T>>;
-
-export function onSnapshot<T>(
-  reference: DocumentReference<T>,
-  observer: {
-    next?: (snapshot: DocumentSnapshot<T>) => void;
-    error?: (error: FirestoreError) => void;
-    complete?: () => void;
-  }
-): () => void;
-export function onSnapshot<T>(
-  reference: DocumentReference<T>,
-  options: SnapshotListenOptions,
-  observer: {
-    next?: (snapshot: DocumentSnapshot<T>) => void;
-    error?: (error: Error) => void;
-    complete?: () => void;
-  }
-): () => void;
-export function onSnapshot<T>(
-  reference: DocumentReference<T>,
-  onNext: (snapshot: DocumentSnapshot<T>) => void,
-  onError?: (error: Error) => void,
-  onCompletion?: () => void
-): () => void;
-export function onSnapshot<T>(
-  reference: DocumentReference<T>,
-  options: SnapshotListenOptions,
-  onNext: (snapshot: DocumentSnapshot<T>) => void,
-  onError?: (error: Error) => void,
-  onCompletion?: () => void
-): () => void;
 
 export interface SnapshotOptions {
   readonly serverTimestamps?: 'estimate' | 'previous' | 'none';
