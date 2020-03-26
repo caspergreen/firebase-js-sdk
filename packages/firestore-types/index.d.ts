@@ -40,7 +40,6 @@ export interface Settings {
   experimentalForceLongPolling?: boolean;
 }
 
-
 export interface FirestoreDataConverter<T> {
   toFirestore(modelObject: T): DocumentData;
 
