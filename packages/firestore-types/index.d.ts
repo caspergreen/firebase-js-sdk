@@ -281,7 +281,6 @@ export class DocumentReference<T = DocumentData> {
   withConverter<U>(converter: FirestoreDataConverter<U>): DocumentReference<U>;
 }
 
-
 export interface SnapshotOptions {
   readonly serverTimestamps?: 'estimate' | 'previous' | 'none';
 }
