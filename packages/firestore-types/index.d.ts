@@ -21,6 +21,8 @@ export type DocumentData = { [field: string]: any };
 
 export type UpdateData = { [fieldPath: string]: any };
 
+export type LogLevel = 'debug' | 'error' | 'silent';
+
 export const CACHE_SIZE_UNLIMITED: number;
 
 export interface IndexedDbPersistenceSettings {
@@ -38,7 +40,6 @@ export interface Settings {
   experimentalForceLongPolling?: boolean;
 }
 
-export type LogLevel = 'debug' | 'error' | 'silent';
 
 export interface FirestoreDataConverter<T> {
   toFirestore(modelObject: T): DocumentData;
@@ -55,7 +56,6 @@ export class FirebaseFirestore {
 
   collectionGroup(collectionId: string): Query<DocumentData>;
 }
-
 
 export class GeoPoint {
   constructor(latitude: number, longitude: number);
@@ -424,7 +424,6 @@ export function onSnapshot<T>(
   onError?: (error: Error) => void,
   onCompletion?: () => void
 ): () => void;
-
 
 // MARK: CollectionReference methods
 export function getDocuments<T>(
