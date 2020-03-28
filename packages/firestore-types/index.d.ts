@@ -36,7 +36,6 @@ export interface Settings {
   host?: string;
   ssl?: boolean;
   persistence: Persistence | Persistence[];
-  logLevel: LogLevel;
   experimentalForceLongPolling?: boolean;
 }
 
@@ -323,6 +322,8 @@ export function initializeFirestore(
   firestore: FirebaseFirestore,
   settings: Settings
 ): void;
+
+export function setLogLevel(logLevel: LogLevel): void;
 
 // MARK: Firestore methods
 
